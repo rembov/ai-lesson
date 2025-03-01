@@ -16,8 +16,6 @@ import numpy as np # numpy для работы с векторами и матр
 #     'machine-learning-databases/iris/iris.data', header=None)
 
 df = pd.read_csv('data.csv')
-
-
 # смотрим что в них
 print(df.head())
 
@@ -30,12 +28,12 @@ y = df.iloc[:, 4].values
 y = np.where(y == "Iris-setosa", 1, -1)
 
 # возьмем два признака, чтобы было удобне визуализировать задачу
-X = df.iloc[:, [0, 3]].values
+X = df.iloc[:, [0,1,3]].values
 
 # Признаки в X, ответы в y - постмотрим на плоскости как выглядит задача
 plt.figure
-plt.scatter(X[y == 1, 0], X[y == 1, 1], X[y == 1, 0], color='red', marker='o')
-plt.scatter(X[y == -1, 0], X[y == -1, 1], X[y == -1, 0], color='blue', marker='x')
+plt.scatter(X[y == 1, 0], X[y == 1, 1], color='red', marker='o')
+plt.scatter(X[y == -1, 0], X[y == -1, 1], color='blue', marker='x')
 
 # переходим к созданию нейрона
 # функция нейрона:
@@ -44,14 +42,14 @@ plt.scatter(X[y == -1, 0], X[y == -1, 1], X[y == -1, 0], color='blue', marker='x
 # ответ = -1, если значение < 0
 
 def neuron(w,x):
-    if((w[1]*x[0]+w[2]*x[1]+w[3]*x[0]+w[0])>=0):
+    if((w[1]*x[0]+w[2]*x[1]+w[3]*x[2]+w[0])>=0):
         predict = 1
     else: 
         predict = -1
     return predict
 
 # проверим как это работает (веса зададим пока произвольно)
-w = np.array([0, 0.1, 0.4])
+w = np.array([0, 0.1, 0.4,0.5])
 print(neuron(w,X[1])) # вывод ответа нейрона для примера с номером 1
 
 
@@ -85,8 +83,8 @@ xl=np.linspace(min(X[:,0]), max(X[:,0])) # диапазон координаты
 
 # построим сначала данные на плоскости
 plt.figure
-plt.scatter(X[y == 1, 0], X[y == 1, 1], X[y == 1, 0], color='red', marker='o')
-plt.scatter(X[y == -1, 0], X[y == -1, 1], X[y == -1, 0], color='blue', marker='x')
+plt.scatter(X[y == 1, 0], X[y == 1, 1], color='red', marker='o')
+plt.scatter(X[y == -1, 0], X[y == -1, 1], color='blue', marker='x')
 
 
 # потом в цикле будем брать набор весов из сохраненного списка и по нему строить линию
