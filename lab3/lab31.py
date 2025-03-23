@@ -3,7 +3,7 @@ import random
 
 x = torch.zeros(5,3,dtype=torch.int)
 print(x)
-x = torch.rand(5, 3)
+x = torch.rand(5, 3, requires_grad=True)
 print(x) 
 x = x.to(dtype = torch.float32)
 print(x)
@@ -13,9 +13,8 @@ sluch_chislo=random.randint(1,10)
 print(sluch_chislo)
 zz=z*sluch_chislo
 print(zz)
-x.requires_grad_(True)
 eex = torch.exp(zz)
 print(eex)
-eex.backward(torch.ones_like(eex))
-proiz=eex.grad
+eex.backward(gradient=torch.ones_like(eex))
+proiz=x.grad
 print(proiz)
