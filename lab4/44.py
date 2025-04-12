@@ -18,12 +18,12 @@ class NNetRegression(nn.Module):
         return self.layers(X)
 
 input_size = X.shape[1] 
-hidden_size = 3  
-output_size = 1  
+hidden_size = 30
+output_size = 10
 net = NNetRegression(input_size, hidden_size, output_size)
 lossFn = nn.L1Loss()  
-optimizer = torch.optim.SGD(net.parameters(), lr=0.01)
-epochs = 100
+optimizer = torch.optim.SGD(net.parameters(), lr=0.0001)
+epochs = 1000
 for i in range(epochs):
     pred = net(X)  
     loss = lossFn(pred.squeeze(), y)  
@@ -42,3 +42,7 @@ err = torch.mean(abs(y - pred.T).squeeze())
 print('\nОшибка (MAE):')
 print(err)
 
+with torch.no_grad():
+    y1 = net.forward(torch.Tensor([30]))
+    y2 = net.forward(torch.Tensor([30]))
+print(y1,y2)
